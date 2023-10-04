@@ -1,6 +1,4 @@
-using Lib;
-using static Lib.BigInt;
-using static Lib.Rational;
+using static Lib.Utils;
 namespace Interface
 {
     public partial class Form1 : Form
@@ -12,7 +10,7 @@ namespace Interface
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if (richTextBox1.Text=="" || richTextBox2.Text=="")
+            if (richTextBox1.Text == "" || richTextBox2.Text == "")
             {
                 MessageBox.Show("Пустое поле");
                 return;
@@ -84,6 +82,21 @@ namespace Interface
             {
                 MessageBox.Show("Ошибка");
             }
+        }
+
+        private void richTextBox1_TextChanged(object sender, EventArgs e)
+        {
+            labelNum1.Text = "Длина строки: " + richTextBox1.Text.Length.ToString();
+        }
+
+        private void richTextBox2_TextChanged(object sender, EventArgs e)
+        {
+            labelNum2.Text = "Длина строки: " + richTextBox2.Text.Length.ToString();
+        }
+
+        private void richTextBox3_TextChanged(object sender, EventArgs e)
+        {
+            labelResult.Text = "Длина строки: " + richTextBox3.Text.Length.ToString();
         }
     }
 }

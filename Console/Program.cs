@@ -1,6 +1,6 @@
 ﻿using Lib;
 using static Lib.BigInt;
-using static Lib.Rational;
+using static Lib.Utils;
 namespace P
 {
     class P
