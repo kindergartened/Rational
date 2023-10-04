@@ -172,12 +172,21 @@ namespace Lib
         /// <returns>Результат умножения n1*n2</returns>
         public static BigInt operator *(BigInt num1, BigInt num2)
         {
-            BigInt result = new BigInt("0");
-            for(int i = 0; i < num1.digits.Count; i++)
+            BigInteger result = 0;
+            BigInteger multiplier = BigInteger.Parse(num1.ToString());
+            BigInteger nnum2 = BigInteger.Parse(num2.ToString());
+            // Проверяем знаки чисел и меняем их на положительные
+            while (nnum2 > 0)
             {
-                result += num2;
+                if (nnum2 % 2 == 1)
+                {
+                    result += multiplier;
+                }
+                multiplier <<= 1; // Умножаем на 2, сдвигая биты влево
+                nnum2 >>= 1; // Делим на 2, сдвигая биты вправо
             }
-            return result;
+            BigInt res = new BigInt(result.ToString());
+            return res;
         }
         /// <summary>
         /// переопределение метода ToString() для вывода числа в формате string
