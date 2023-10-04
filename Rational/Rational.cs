@@ -173,20 +173,21 @@ namespace Lib
         public static BigInt operator *(BigInt num1, BigInt num2)
         {
             BigInteger result = 0;
-            BigInteger multiplier = BigInteger.Parse(num1.ToString());
-            BigInteger nnum2 = BigInteger.Parse(num2.ToString());
-            // Проверяем знаки чисел и меняем их на положительные
-            while (nnum2 > 0)
-            {
-                if (nnum2 % 2 == 1)
-                {
-                    result += multiplier;
-                }
-                multiplier <<= 1; // Умножаем на 2, сдвигая биты влево
-                nnum2 >>= 1; // Делим на 2, сдвигая биты вправо
-            }
-            BigInt res = new BigInt(result.ToString());
-            return res;
+              BigInteger multiplier = BigInteger.Parse(num1.ToString());
+              BigInteger nnum2 = BigInteger.Parse(num2.ToString());
+
+              // Проверяем знаки чисел и меняем их на положительные
+              while (nnum2 > 0)
+              {
+                  if (nnum2 % 2 == 1)
+                  {
+                      result += multiplier;
+                  }
+                  multiplier <<= 1; // Умножаем на 2, сдвигая биты влево
+                  nnum2 >>= 1; // Делим на 2, сдвигая биты вправо
+              }
+              BigInt res = new BigInt(result.ToString());
+              return res;
         }
         /// <summary>
         /// переопределение метода ToString() для вывода числа в формате string
@@ -203,10 +204,23 @@ namespace Lib
 
             return number;
         }
-        //деление надо добавить
-       /*public static BigInt operator /(BigInt num1, BigInt num2)
+        public static BigInt operator ++(BigInt num)
         {
-            
-        }*/
+            return num + new BigInt("1");
+        }
+        public static BigInt operator <<(BigInt num)
+        {
+            return new BigInt(num.ToString());
+        }
+        public static BigInt operator >>(BigInt num)
+        {
+            return new BigInt(num.ToString());
+        }
+        //деление надо добавить
+        /*public static BigInt operator /(BigInt num1, BigInt num2)
+         {
+
+         }*/
+
     }
 }
