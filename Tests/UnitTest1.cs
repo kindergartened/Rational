@@ -49,7 +49,8 @@ namespace Tests
             BigInt num1 = new BigInt(n1);
             BigInt num2 = new BigInt(n2);
             BigInt result = new BigInt("0");
-           
+            result = num1 /num2;
+            Assert.AreEqual(DivideBig(n1, n2), result.ToString());
         }
     }
 }

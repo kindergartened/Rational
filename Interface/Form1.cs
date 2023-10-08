@@ -1,3 +1,4 @@
+using Lib;
 using static Lib.Utils;
 namespace Interface
 {
@@ -38,7 +39,14 @@ namespace Interface
             {
                 string n1 = richTextBox1.Text;
                 string n2 = richTextBox2.Text;
-                richTextBox3.Text = MinusBig(n1, n2);
+                BigInt num1 = new(n1);
+                BigInt num2 = new(n2);
+                if (num1 > num2)
+                    richTextBox3.Text = MinusBig(n1, n2).TrimStart('0');
+                else if (num1 == num2)
+                    richTextBox3.Text = "0";
+                else
+                    richTextBox3.Text ="-"+MinusBig(n2, n1).TrimStart('0');
             }
             catch (Exception)
             {
@@ -78,9 +86,9 @@ namespace Interface
                 string n2 = richTextBox2.Text;
                 richTextBox3.Text = DivideBig(n1, n2);
             }
-            catch (Exception)
-            {
-                MessageBox.Show("Ошибка");
+            catch (Exception Error)
+            { 
+                MessageBox.Show("Ошибка:"+ Error.Message);
             }
         }
 

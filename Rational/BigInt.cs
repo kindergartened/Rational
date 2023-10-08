@@ -1,6 +1,6 @@
 ﻿namespace Lib
 {
-    class BigInt
+    public class BigInt
     {
         private List<int> digits;
 
@@ -86,12 +86,8 @@
                 {
                     borrow = 0;
                 }
-
                 resultDigits.Add(difference);
             }
-
-            //изменить в случае если 2ое число больше(мб операнд сравнения добавить)
-
             return new BigInt(resultDigits);
         }
 
