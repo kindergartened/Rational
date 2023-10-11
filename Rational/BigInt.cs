@@ -11,12 +11,22 @@
         public BigInt(string number)
         {
             digits = new List<int>();
-
             for (int i = number.Length - 1; i >= 0; i--)
             {
                 int digit = int.Parse(number[i].ToString());
                 digits.Add(digit);
             }
+        }
+        /// <summary>
+        /// проверка на отрицательное число
+        /// </summary>
+        /// <param name="number">число в формате string</param>
+        /// <returns></returns>
+        public bool IsNegative(string number)
+        {
+            if (number[0]=='-')
+                return false;
+            return true;
         }
 
         /// <summary>

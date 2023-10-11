@@ -7,7 +7,6 @@ namespace Tests
     public class UnitTest1
     {
         [TestMethod]
-        //не правильно
         public void MultiplyTest()
         {
             string n1 = "111111111111111111111111145454567";
