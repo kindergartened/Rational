@@ -1,4 +1,7 @@
-﻿namespace Lib
+﻿using System.Numerics;
+using System.Text;
+
+namespace Lib
 {
     public class BigInt
     {
@@ -270,32 +273,93 @@
         /// <param name="num1">Делимое BigInt число.</param>
         /// <param name="num2">Делитель BigInt число.</param>
         /// <returns>Частное от деления двух BigInt чисел.</returns>
-        public static BigInt operator /(BigInt num1, BigInt num2)
+        public static BigInt operator /(BigInt dividend, BigInt divisor)
         {
-            if (num2 == 0)
+            dividend.digits.Reverse();
+            divisor.digits.Reverse();
+            BigInteger n1 = BigInteger.Parse(string.Join("", dividend.digits));
+            BigInteger n2 = BigInteger.Parse(string.Join("", divisor.digits));
+            BigInteger result = n1 / n2;
+            return new BigInt(result.ToString());
+            /*if (divisor == 0)
             {
-                throw new DivideByZeroException("Division by zero is not allowed.");
+                throw new DivideByZeroException();
             }
 
-            BigInt quotient = new BigInt("0");
-            BigInt remainder = new BigInt(num1.ToString());
+            List<int> quotientDigits = new List<int>();
+            List<int> dividendDigits = new List<int>(dividend.digits);
 
-            while (remainder >= num2)
+            int divisorLength = divisor.digits.Count;
+            int dividendLength = dividendDigits.Count;
+
+            for (int i = dividendLength - 1; i >= 0; i--)
             {
-                BigInt temp = new BigInt(num2.ToString());
-                int count = 0;
+                int currentDigit = dividendDigits[i];
 
-                while (remainder >= (temp << 1))
+                if (currentDigit == 0 && quotientDigits.Count == 0)
                 {
-                    temp <<= 1;
-                    count++;
+                    continue;
                 }
 
-                remainder -= temp;
-                quotient += new BigInt("1") << count;
-            }
+                if (currentDigit < divisor.digits[divisorLength - 1])
+                {
+                    if (i > 0)
+                    {
+                        currentDigit = currentDigit * 10 + dividendDigits[i - 1]; 
+                    }
+                    else
+                    {
+                        quotientDigits.Add(0);
+                        break;
+                    }
+                }
 
-            return quotient;
+                int quotientDigit = currentDigit / divisor.digits[divisorLength - 1];
+                quotientDigits.Add(quotientDigit);
+
+                List<int> tempDividend = new List<int>();
+                for (int j = 0; j < divisorLength; j++)
+                {
+                    int product = quotientDigit * divisor.digits[j];
+                    tempDividend.Add(product);
+                }
+
+                int carry = 0;
+                for (int j = 0; j < tempDividend.Count; j++)
+                {
+                    int sum = tempDividend[j] + carry;
+                    if (sum >= 10)
+                    {
+                        carry = sum / 10;
+                        sum %= 10;
+                    }
+                    else
+                    {
+                        carry = 0;
+                    }
+                    tempDividend[j] = sum;
+                }
+
+                if (carry > 0)
+                {
+                    tempDividend.Add(carry);
+                }
+
+                int tempDividendLength = tempDividend.Count;
+
+                for (int j = 0; j < tempDividendLength; j++)
+                {
+                    dividendDigits[i + j] -= tempDividend[j];
+                    if (dividendDigits[i + j] < 0)
+                    {
+                        dividendDigits[i + j] += 10;
+                        dividendDigits[i + j + 1]--;
+                    }
+                }
+            }*/
+
+            /*quotientDigits.Reverse();
+            return new BigInt(quotientDigits);*/
         }
 
         /// <summary>
