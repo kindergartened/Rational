@@ -1,4 +1,5 @@
-﻿using System.Numerics;
+﻿using Microsoft.VisualBasic.FileIO;
+using System.Numerics;
 using System.Text;
 
 namespace Lib
@@ -6,6 +7,7 @@ namespace Lib
     public class BigInt
     {
         private List<int> digits;
+        private bool isNegative = false;
 
         /// <summary>
         /// преобразование числа в формате string в BigInt
@@ -20,17 +22,7 @@ namespace Lib
                 digits.Add(digit);
             }
         }
-        /// <summary>
-        /// проверка на отрицательное число
-        /// </summary>
-        /// <param name="number">число в формате string</param>
-        /// <returns></returns>
-        public bool IsNegative(string number)
-        {
-            if (number[0]=='-')
-                return false;
-            return true;
-        }
+        public bool IsNegative => isNegative;
 
         /// <summary>
         /// конструктор
@@ -225,49 +217,6 @@ namespace Lib
         public static BigInt operator ++(BigInt num) => num + new BigInt("1");
 
         /// <summary>
-        /// Переопределение оператора сдвига влево для сдвига цифр BigInt числа на указанное количество разрядов влево.
-        /// </summary>
-        /// <param name="num">Исходное BigInt число.</param>
-        /// <param name="shift">Количество разрядов для сдвига.</param>
-        /// <returns>BigInt число после сдвига влево.</returns>
-        public static BigInt operator <<(BigInt num, int shift)
-        {
-            if (shift < 0)
-            {
-                throw new ArgumentException("Shift value must be non-negative.");
-            }
-
-            List<int> shiftedDigits = new List<int>(num.digits);
-            shiftedDigits.InsertRange(0, new int[shift]); // Вставляем нули в начало списка
-
-            return new BigInt(shiftedDigits);
-        }
-
-        /// <summary>
-        /// Переопределение оператора сдвига вправо для сдвига цифр BigInt числа на указанное количество разрядов вправо.
-        /// </summary>
-        /// <param name="num">Исходное BigInt число.</param>
-        /// <param name="shift">Количество разрядов для сдвига.</param>
-        /// <returns>BigInt число после сдвига вправо.</returns>
-        public static BigInt operator >>(BigInt num, int shift)
-        {
-            if (shift < 0)
-            {
-                throw new ArgumentException("Shift value must be non-negative.");
-            }
-
-            if (shift >= num.digits.Count)
-            {
-                return new BigInt("0"); // Если сдвиг больше или равен количеству цифр, результат - ноль.
-            }
-
-            List<int> shiftedDigits = new List<int>(num.digits);
-            shiftedDigits.RemoveRange(0, shift); // Удаляем первые shift цифр
-
-            return new BigInt(shiftedDigits);
-        }
-
-        /// <summary>
         /// Оператор деления BigInt числа на другое BigInt число.
         /// </summary>
         /// <param name="num1">Делимое BigInt число.</param>
@@ -275,91 +224,39 @@ namespace Lib
         /// <returns>Частное от деления двух BigInt чисел.</returns>
         public static BigInt operator /(BigInt dividend, BigInt divisor)
         {
-            dividend.digits.Reverse();
-            divisor.digits.Reverse();
-            BigInteger n1 = BigInteger.Parse(string.Join("", dividend.digits));
-            BigInteger n2 = BigInteger.Parse(string.Join("", divisor.digits));
-            BigInteger result = n1 / n2;
-            return new BigInt(result.ToString());
-            /*if (divisor == 0)
+            List<int> dividendDigits = new();
+            dividendDigits.AddRange(dividend.digits);
+            dividendDigits.Reverse();
+            List<int> divisorDigits = new();
+            divisorDigits.AddRange(divisor.digits);
+            divisorDigits.Reverse();
+
+            List<int> answer = new List<int>();
+
+            int tempDividend = 0;
+            int currentIndex = 0;
+
+            // Пока не пройдем по всем цифрам в делимом числе
+            while (currentIndex < dividendDigits.Count)
             {
-                throw new DivideByZeroException();
+                tempDividend = tempDividend * 10 + dividendDigits[currentIndex];
+                currentIndex++;
+
+                int quotient = 0;
+
+                // Выполняем деление, пока tempDividend не станет меньше divisor
+                while (tempDividend >= divisor)
+                {
+                    tempDividend -= (int)divisor;
+                    quotient++;
+                }
+
+                answer.Add(quotient);
             }
+            BigInt res = new BigInt(answer);
+            res.digits.Reverse();
 
-            List<int> quotientDigits = new List<int>();
-            List<int> dividendDigits = new List<int>(dividend.digits);
-
-            int divisorLength = divisor.digits.Count;
-            int dividendLength = dividendDigits.Count;
-
-            for (int i = dividendLength - 1; i >= 0; i--)
-            {
-                int currentDigit = dividendDigits[i];
-
-                if (currentDigit == 0 && quotientDigits.Count == 0)
-                {
-                    continue;
-                }
-
-                if (currentDigit < divisor.digits[divisorLength - 1])
-                {
-                    if (i > 0)
-                    {
-                        currentDigit = currentDigit * 10 + dividendDigits[i - 1]; 
-                    }
-                    else
-                    {
-                        quotientDigits.Add(0);
-                        break;
-                    }
-                }
-
-                int quotientDigit = currentDigit / divisor.digits[divisorLength - 1];
-                quotientDigits.Add(quotientDigit);
-
-                List<int> tempDividend = new List<int>();
-                for (int j = 0; j < divisorLength; j++)
-                {
-                    int product = quotientDigit * divisor.digits[j];
-                    tempDividend.Add(product);
-                }
-
-                int carry = 0;
-                for (int j = 0; j < tempDividend.Count; j++)
-                {
-                    int sum = tempDividend[j] + carry;
-                    if (sum >= 10)
-                    {
-                        carry = sum / 10;
-                        sum %= 10;
-                    }
-                    else
-                    {
-                        carry = 0;
-                    }
-                    tempDividend[j] = sum;
-                }
-
-                if (carry > 0)
-                {
-                    tempDividend.Add(carry);
-                }
-
-                int tempDividendLength = tempDividend.Count;
-
-                for (int j = 0; j < tempDividendLength; j++)
-                {
-                    dividendDigits[i + j] -= tempDividend[j];
-                    if (dividendDigits[i + j] < 0)
-                    {
-                        dividendDigits[i + j] += 10;
-                        dividendDigits[i + j + 1]--;
-                    }
-                }
-            }*/
-
-            /*quotientDigits.Reverse();
-            return new BigInt(quotientDigits);*/
+            return res;
         }
 
         /// <summary>
@@ -446,5 +343,29 @@ namespace Lib
             return new BigInt(num1.ToString()) != num2;
         }
 
+        public static BigInt operator -(int num1, BigInt num2)
+        {
+            return new BigInt(num1.ToString()) - num2;
+        }
+
+        public static BigInt operator -(BigInt num2, int num1)
+        {
+            return new BigInt(num2.ToString()) - num1;
+        }
+
+        public static bool operator >=(int num1, BigInt num2)
+        {
+            return new BigInt(num1.ToString()) >= num2;
+        }
+
+        public static bool operator <=(int num1, BigInt num2)
+        {
+            return new BigInt(num1.ToString()) <= num2;
+        }
+
+        public static explicit operator int(BigInt v)
+        {
+            return int.Parse(v.ToString());
+        }
     }
 }
