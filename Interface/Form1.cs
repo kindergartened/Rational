@@ -154,7 +154,7 @@ namespace Interface
             {
                 string n1 = richTextBox1.Text;
                 string n2 = richTextBox2.Text;
-                richTextBox3.Text = DivideBig(n1, n2);
+                richTextBox3.Text = DivideBig(n1, n2).TrimStart('0');
             }
             catch (Exception Error)
             { 

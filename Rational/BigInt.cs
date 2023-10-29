@@ -22,6 +22,7 @@ namespace Lib
                 digits.Add(digit);
             }
         }
+        
         public bool IsNegative => isNegative;
 
         /// <summary>
@@ -233,21 +234,25 @@ namespace Lib
 
             List<int> answer = new List<int>();
 
-            int tempDividend = 0;
+            BigInt tempDividend = new BigInt("0");
             int currentIndex = 0;
+            BigInt IO = new BigInt("10");
 
             // Пока не пройдем по всем цифрам в делимом числе
             while (currentIndex < dividendDigits.Count)
             {
-                tempDividend = tempDividend * 10 + dividendDigits[currentIndex];
+                
+                tempDividend = tempDividend*IO+dividendDigits[currentIndex];
                 currentIndex++;
 
                 int quotient = 0;
-
+                
                 // Выполняем деление, пока tempDividend не станет меньше divisor
                 while (tempDividend >= divisor)
                 {
-                    tempDividend -= (int)divisor;
+                    tempDividend -= divisor;
+                    while (tempDividend.digits[^1] == 0 && tempDividend.digits.Count > 1)
+                        tempDividend.digits.RemoveAt(tempDividend.digits.Count-1);
                     quotient++;
                 }
 
@@ -350,7 +355,7 @@ namespace Lib
 
         public static BigInt operator -(BigInt num2, int num1)
         {
-            return new BigInt(num2.ToString()) - num1;
+            return num2 - new BigInt(num1.ToString());
         }
 
         public static bool operator >=(int num1, BigInt num2)
@@ -362,10 +367,44 @@ namespace Lib
         {
             return new BigInt(num1.ToString()) <= num2;
         }
-
-        public static explicit operator int(BigInt v)
+        public static bool operator >=(long num1, BigInt num2)
         {
-            return int.Parse(v.ToString());
+            return new BigInt(num1.ToString()) >= num2;
         }
+
+        public static bool operator <=(long num1, BigInt num2)
+        {
+            return new BigInt(num1.ToString()) <= num2;
+        }
+        public static BigInt operator +(int num1, BigInt num2)
+        {
+            return new BigInt(num1.ToString()) + num2;
+        }
+
+        public static BigInt operator +(BigInt num2, int num1)
+        {
+            return num2 + new BigInt(num1.ToString());
+        }
+        /// <summary>
+        /// эта работа для Владика
+        /// </summary>
+        /// <param name="num"></param>
+        /// <param name="pow"></param>
+        /// <returns></returns>
+        public static BigInt operator ^(BigInt num,int pow)
+        {
+            return num;
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="num1"></param>
+        /// <param name="num2"></param>
+        /// <returns></returns>
+        /*public static BigInt operator %(BigInt num1,BigInt num2)
+        {
+            return num1 - ((num1 / num2) * num2);
+        }*/
+
     }
 }
