@@ -401,10 +401,10 @@ namespace Lib
         /// <param name="num1"></param>
         /// <param name="num2"></param>
         /// <returns></returns>
-        /*public static BigInt operator %(BigInt num1,BigInt num2)
+        public static BigInt operator %(BigInt num1,BigInt num2)
         {
             return num1 - ((num1 / num2) * num2);
-        }*/
+        }
 
     }
 }

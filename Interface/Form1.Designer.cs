@@ -28,192 +28,191 @@
         /// </summary>
         private void InitializeComponent()
         {
-            richTextBox1 = new RichTextBox();
-            richTextBox2 = new RichTextBox();
-            richTextBox3 = new RichTextBox();
-            button1 = new Button();
-            button2 = new Button();
-            button3 = new Button();
-            button4 = new Button();
-            label1 = new Label();
-            label2 = new Label();
-            label3 = new Label();
-            labelNum1 = new Label();
-            labelNum2 = new Label();
-            labelResult = new Label();
-            SuspendLayout();
+            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
+            this.richTextBox2 = new System.Windows.Forms.RichTextBox();
+            this.richTextBox3 = new System.Windows.Forms.RichTextBox();
+            this.button1 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
+            this.button3 = new System.Windows.Forms.Button();
+            this.button4 = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.labelNum1 = new System.Windows.Forms.Label();
+            this.labelNum2 = new System.Windows.Forms.Label();
+            this.labelResult = new System.Windows.Forms.Label();
+            this.button5 = new System.Windows.Forms.Button();
+            this.SuspendLayout();
             // 
             // richTextBox1
             // 
-            richTextBox1.Font = new Font("Segoe UI", 24F, FontStyle.Regular, GraphicsUnit.Point);
-            richTextBox1.Location = new Point(41, 57);
-            richTextBox1.Margin = new Padding(3, 2, 3, 2);
-            richTextBox1.Name = "richTextBox1";
-            richTextBox1.Size = new Size(366, 167);
-            richTextBox1.TabIndex = 0;
-            richTextBox1.Text = "";
-            richTextBox1.TextChanged += richTextBox1_TextChanged;
+            this.richTextBox1.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.richTextBox1.Location = new System.Drawing.Point(47, 76);
+            this.richTextBox1.Name = "richTextBox1";
+            this.richTextBox1.Size = new System.Drawing.Size(418, 221);
+            this.richTextBox1.TabIndex = 0;
+            this.richTextBox1.Text = "";
             // 
             // richTextBox2
             // 
-            richTextBox2.Font = new Font("Segoe UI", 24F, FontStyle.Regular, GraphicsUnit.Point);
-            richTextBox2.Location = new Point(497, 56);
-            richTextBox2.Margin = new Padding(3, 2, 3, 2);
-            richTextBox2.Name = "richTextBox2";
-            richTextBox2.Size = new Size(388, 168);
-            richTextBox2.TabIndex = 1;
-            richTextBox2.Text = "";
-            richTextBox2.TextChanged += richTextBox2_TextChanged;
+            this.richTextBox2.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.richTextBox2.Location = new System.Drawing.Point(568, 75);
+            this.richTextBox2.Name = "richTextBox2";
+            this.richTextBox2.Size = new System.Drawing.Size(443, 223);
+            this.richTextBox2.TabIndex = 1;
+            this.richTextBox2.Text = "";
             // 
             // richTextBox3
             // 
-            richTextBox3.Font = new Font("Segoe UI", 24F, FontStyle.Regular, GraphicsUnit.Point);
-            richTextBox3.Location = new Point(41, 278);
-            richTextBox3.Margin = new Padding(3, 2, 3, 2);
-            richTextBox3.Name = "richTextBox3";
-            richTextBox3.Size = new Size(844, 129);
-            richTextBox3.TabIndex = 2;
-            richTextBox3.Text = "";
-            richTextBox3.TextChanged += richTextBox3_TextChanged;
+            this.richTextBox3.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.richTextBox3.Location = new System.Drawing.Point(47, 371);
+            this.richTextBox3.Name = "richTextBox3";
+            this.richTextBox3.Size = new System.Drawing.Size(964, 171);
+            this.richTextBox3.TabIndex = 2;
+            this.richTextBox3.Text = "";
             // 
             // button1
             // 
-            button1.FlatStyle = FlatStyle.Popup;
-            button1.Font = new Font("Segoe UI", 36F, FontStyle.Regular, GraphicsUnit.Point);
-            button1.Location = new Point(94, 438);
-            button1.Margin = new Padding(3, 2, 3, 2);
-            button1.Name = "button1";
-            button1.Size = new Size(99, 91);
-            button1.TabIndex = 3;
-            button1.Text = "+";
-            button1.UseVisualStyleBackColor = true;
-            button1.Click += button1_Click;
+            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.button1.Font = new System.Drawing.Font("Segoe UI", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.button1.Location = new System.Drawing.Point(107, 584);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(113, 121);
+            this.button1.TabIndex = 3;
+            this.button1.Text = "+";
+            this.button1.UseVisualStyleBackColor = true;
             // 
             // button2
             // 
-            button2.FlatStyle = FlatStyle.Popup;
-            button2.Font = new Font("Segoe UI", 48F, FontStyle.Regular, GraphicsUnit.Point);
-            button2.Location = new Point(717, 438);
-            button2.Margin = new Padding(3, 2, 3, 2);
-            button2.Name = "button2";
-            button2.Size = new Size(102, 91);
-            button2.TabIndex = 4;
-            button2.Text = "-";
-            button2.UseVisualStyleBackColor = true;
-            button2.Click += button2_Click;
+            this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.button2.Font = new System.Drawing.Font("Segoe UI", 48F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.button2.Location = new System.Drawing.Point(819, 584);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(117, 121);
+            this.button2.TabIndex = 4;
+            this.button2.Text = "-";
+            this.button2.UseVisualStyleBackColor = true;
             // 
             // button3
             // 
-            button3.FlatStyle = FlatStyle.Popup;
-            button3.Font = new Font("Segoe UI", 36F, FontStyle.Regular, GraphicsUnit.Point);
-            button3.Location = new Point(251, 438);
-            button3.Margin = new Padding(3, 2, 3, 2);
-            button3.Name = "button3";
-            button3.Size = new Size(102, 91);
-            button3.TabIndex = 5;
-            button3.Text = "*";
-            button3.UseVisualStyleBackColor = true;
-            button3.Click += button3_Click;
+            this.button3.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.button3.Font = new System.Drawing.Font("Segoe UI", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.button3.Location = new System.Drawing.Point(287, 584);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(117, 121);
+            this.button3.TabIndex = 5;
+            this.button3.Text = "*";
+            this.button3.UseVisualStyleBackColor = true;
             // 
             // button4
             // 
-            button4.FlatStyle = FlatStyle.Popup;
-            button4.Font = new Font("Segoe UI", 28F, FontStyle.Regular, GraphicsUnit.Point);
-            button4.Location = new Point(560, 438);
-            button4.Margin = new Padding(3, 2, 3, 2);
-            button4.Name = "button4";
-            button4.Size = new Size(99, 91);
-            button4.TabIndex = 6;
-            button4.Text = "/";
-            button4.UseVisualStyleBackColor = true;
-            button4.Click += button4_Click;
+            this.button4.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.button4.Font = new System.Drawing.Font("Segoe UI", 28F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.button4.Location = new System.Drawing.Point(640, 584);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(113, 121);
+            this.button4.TabIndex = 6;
+            this.button4.Text = "/";
+            this.button4.UseVisualStyleBackColor = true;
             // 
             // label1
             // 
-            label1.AutoSize = true;
-            label1.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point);
-            label1.Location = new Point(177, 30);
-            label1.Name = "label1";
-            label1.Size = new Size(85, 25);
-            label1.TabIndex = 7;
-            label1.Text = "Число 1";
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Segoe UI", 13.8F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point);
+            this.label1.Location = new System.Drawing.Point(202, 40);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(102, 31);
+            this.label1.TabIndex = 7;
+            this.label1.Text = "Число 1";
             // 
             // label2
             // 
-            label2.AutoSize = true;
-            label2.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point);
-            label2.Location = new Point(642, 29);
-            label2.Name = "label2";
-            label2.Size = new Size(85, 25);
-            label2.TabIndex = 8;
-            label2.Text = "Число 2";
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Segoe UI", 13.8F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point);
+            this.label2.Location = new System.Drawing.Point(734, 39);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(102, 31);
+            this.label2.TabIndex = 8;
+            this.label2.Text = "Число 2";
             // 
             // label3
             // 
-            label3.AutoSize = true;
-            label3.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold, GraphicsUnit.Point);
-            label3.Location = new Point(404, 251);
-            label3.Name = "label3";
-            label3.Size = new Size(100, 25);
-            label3.TabIndex = 9;
-            label3.Text = "Результат";
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.label3.Location = new System.Drawing.Point(462, 335);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(119, 31);
+            this.label3.TabIndex = 9;
+            this.label3.Text = "Результат";
             // 
             // labelNum1
             // 
-            labelNum1.AutoSize = true;
-            labelNum1.Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
-            labelNum1.ForeColor = SystemColors.ControlDark;
-            labelNum1.Location = new Point(147, 226);
-            labelNum1.Name = "labelNum1";
-            labelNum1.Size = new Size(150, 25);
-            labelNum1.TabIndex = 10;
-            labelNum1.Text = "Длина строки: 0";
+            this.labelNum1.AutoSize = true;
+            this.labelNum1.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.labelNum1.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.labelNum1.Location = new System.Drawing.Point(168, 301);
+            this.labelNum1.Name = "labelNum1";
+            this.labelNum1.Size = new System.Drawing.Size(191, 32);
+            this.labelNum1.TabIndex = 10;
+            this.labelNum1.Text = "Длина строки: 0";
             // 
             // labelNum2
             // 
-            labelNum2.AutoSize = true;
-            labelNum2.Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
-            labelNum2.ForeColor = SystemColors.ControlDark;
-            labelNum2.Location = new Point(626, 226);
-            labelNum2.Name = "labelNum2";
-            labelNum2.Size = new Size(150, 25);
-            labelNum2.TabIndex = 11;
-            labelNum2.Text = "Длина строки: 0";
+            this.labelNum2.AutoSize = true;
+            this.labelNum2.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.labelNum2.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.labelNum2.Location = new System.Drawing.Point(715, 301);
+            this.labelNum2.Name = "labelNum2";
+            this.labelNum2.Size = new System.Drawing.Size(191, 32);
+            this.labelNum2.TabIndex = 11;
+            this.labelNum2.Text = "Длина строки: 0";
             // 
             // labelResult
             // 
-            labelResult.AutoSize = true;
-            labelResult.Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
-            labelResult.ForeColor = SystemColors.ControlDark;
-            labelResult.Location = new Point(384, 409);
-            labelResult.Name = "labelResult";
-            labelResult.Size = new Size(150, 25);
-            labelResult.TabIndex = 12;
-            labelResult.Text = "Длина строки: 0";
+            this.labelResult.AutoSize = true;
+            this.labelResult.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.labelResult.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.labelResult.Location = new System.Drawing.Point(439, 545);
+            this.labelResult.Name = "labelResult";
+            this.labelResult.Size = new System.Drawing.Size(191, 32);
+            this.labelResult.TabIndex = 12;
+            this.labelResult.Text = "Длина строки: 0";
+            // 
+            // button5
+            // 
+            this.button5.Font = new System.Drawing.Font("Segoe UI Semibold", 16.2F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point);
+            this.button5.Location = new System.Drawing.Point(439, 592);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(133, 120);
+            this.button5.TabIndex = 13;
+            this.button5.Text = "%";
+            this.button5.UseVisualStyleBackColor = true;
+            this.button5.Click += new System.EventHandler(this.button5_Click);
             // 
             // Form1
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
-            AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(938, 552);
-            Controls.Add(labelResult);
-            Controls.Add(labelNum2);
-            Controls.Add(labelNum1);
-            Controls.Add(label3);
-            Controls.Add(label2);
-            Controls.Add(label1);
-            Controls.Add(button4);
-            Controls.Add(button3);
-            Controls.Add(button2);
-            Controls.Add(button1);
-            Controls.Add(richTextBox3);
-            Controls.Add(richTextBox2);
-            Controls.Add(richTextBox1);
-            Margin = new Padding(3, 2, 3, 2);
-            Name = "Form1";
-            Text = "Form1";
-            ResumeLayout(false);
-            PerformLayout();
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(1072, 736);
+            this.Controls.Add(this.button5);
+            this.Controls.Add(this.labelResult);
+            this.Controls.Add(this.labelNum2);
+            this.Controls.Add(this.labelNum1);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.button4);
+            this.Controls.Add(this.button3);
+            this.Controls.Add(this.button2);
+            this.Controls.Add(this.button1);
+            this.Controls.Add(this.richTextBox3);
+            this.Controls.Add(this.richTextBox2);
+            this.Controls.Add(this.richTextBox1);
+            this.Name = "Form1";
+            this.Text = "Form1";
+            this.ResumeLayout(false);
+            this.PerformLayout();
+
         }
 
         #endregion
@@ -231,5 +230,6 @@
         private Label labelNum1;
         private Label labelNum2;
         private Label labelResult;
+        private Button button5;
     }
 }

@@ -176,5 +176,26 @@ namespace Interface
         {
             labelResult.Text = "Длина строки: " + richTextBox3.Text.Length.ToString();
         }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            if (richTextBox1.Text == "" || richTextBox2.Text == "")
+            {
+                MessageBox.Show("Пустое поле");
+                return;
+            }
+            try
+            {
+                string n1 = richTextBox1.Text;
+                string n2 = richTextBox2.Text;
+                BigInt num1 = new BigInt(n1);
+                BigInt num2 = new BigInt(n2);
+                richTextBox3.Text = (num1 % num2).ToString().TrimStart('0');
+            }
+            catch (Exception Error)
+            {
+                MessageBox.Show("Ошибка:" + Error.Message);
+            }
+        }
     }
 }
