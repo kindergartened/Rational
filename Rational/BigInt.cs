@@ -1,5 +1,7 @@
 ﻿using Microsoft.VisualBasic.FileIO;
+using System.Collections.Generic;
 using System.Numerics;
+using System.Runtime.InteropServices;
 using System.Text;
 
 namespace Lib
@@ -192,6 +194,19 @@ namespace Lib
             }
 
             return new BigInt(resultDigits);
+        }
+
+        public static BigInt operator ^(BigInt num1, BigInt s)
+        {
+            BigInt res = num1;
+            int s2 = int.Parse(s.ToString());
+            
+            for (int k = 0; k<s2-1; k++)
+            {
+                res *= num1;
+            }
+
+            return res;
         }
 
         /// <summary>
