@@ -199,9 +199,8 @@ namespace Lib
         public static BigInt operator ^(BigInt num1, BigInt s)
         {
             BigInt res = num1;
-            int s2 = int.Parse(s.ToString());
             
-            for (int k = 0; k<s2-1; k++)
+            for (BigInt k = new("1"); k < s; k++)
             {
                 res *= num1;
             }
@@ -242,23 +241,18 @@ namespace Lib
         {
             List<int> dividendDigits = new();
             dividendDigits.AddRange(dividend.digits);
-            dividendDigits.Reverse();
-            List<int> divisorDigits = new();
-            divisorDigits.AddRange(divisor.digits);
-            divisorDigits.Reverse();
 
-            List<int> answer = new List<int>();
+            List<int> answer = new();
 
-            BigInt tempDividend = new BigInt("0");
-            int currentIndex = 0;
-            BigInt IO = new BigInt("10");
+            BigInt tempDividend = new("0");
+            int currentIndex = dividendDigits.Count - 1;
+            BigInt IO = new("10");
 
             // Пока не пройдем по всем цифрам в делимом числе
-            while (currentIndex < dividendDigits.Count)
+            while (currentIndex >= 0)
             {
-                
                 tempDividend = tempDividend*IO+dividendDigits[currentIndex];
-                currentIndex++;
+                currentIndex--;
 
                 int quotient = 0;
                 
@@ -273,8 +267,11 @@ namespace Lib
 
                 answer.Add(quotient);
             }
-            BigInt res = new BigInt(answer);
+            BigInt res = new(answer);
             res.digits.Reverse();
+
+            while (res.digits[^1] == 0 && res.digits.Count > 1)
+                res.digits.RemoveAt(res.digits.Count - 1);
 
             return res;
         }
