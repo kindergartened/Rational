@@ -11,10 +11,10 @@ namespace P
         static void Main()
         {
             string n1 = "123456789";
-            string n2 = "123";
+            string n2 = "1231";
             BigInt num1 = new BigInt(n1);
             BigInt num2 = new BigInt(n2);
-            string result = (num1 / num2).ToString();
+            string result = (num1 ^ num2).ToString();
             Console.WriteLine(result);
         }
     }
