@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualBasic.FileIO;
+using System;
 using System.Collections.Generic;
 using System.Numerics;
 using System.Runtime.InteropServices;
@@ -34,6 +35,11 @@ namespace Lib
         public BigInt(List<int> digits)
         {
             this.digits = digits;
+        }
+
+        public BigInt(byte[] bytes)
+        {
+            this.digits = bytes.ToList().Select(e => (int)e).ToList();
         }
 
         /// <summary>
@@ -181,6 +187,10 @@ namespace Lib
 
                 for (int j = 0; j < num2.digits.Count || carry > 0; j++)
                 {
+                    if (i + j > resultDigits.Count - 1)
+                    {
+                        return new BigInt(resultDigits);
+                    }
                     int product = resultDigits[i + j] + num1.digits[i] * (j < num2.digits.Count ? num2.digits[j] : 0) + carry;
                     resultDigits[i + j] = product % 10;
                     carry = product / 10;
@@ -357,40 +367,53 @@ namespace Lib
         /// <returns>True, если целое число не равно BigInt числу; в противном случае - False.</returns>
         public static bool operator !=(int num1, BigInt num2)
         {
-            return new BigInt(num1.ToString()) != num2;
+            return num1 != num2;
         }
-
         public static BigInt operator -(int num1, BigInt num2)
         {
-            return new BigInt(num1.ToString()) - num2;
+            return num1 - num2;
         }
-
         public static BigInt operator -(BigInt num2, int num1)
         {
             return num2 - new BigInt(num1.ToString());
         }
-
         public static bool operator >=(int num1, BigInt num2)
         {
-            return new BigInt(num1.ToString()) >= num2;
+            return num1 >= num2;
         }
-
         public static bool operator <=(int num1, BigInt num2)
         {
-            return new BigInt(num1.ToString()) <= num2;
+            return num1 <= num2;
         }
-        public static bool operator >=(long num1, BigInt num2)
+        public static bool operator >=(BigInt num1, int num2)
         {
-            return new BigInt(num1.ToString()) >= num2;
+            return num1 >= num2;
         }
 
-        public static bool operator <=(long num1, BigInt num2)
+        public static bool operator <=(BigInt num1, int num2)
         {
-            return new BigInt(num1.ToString()) <= num2;
+            return num1 <= new BigInt(num2.ToString());
+        }
+        public static bool operator >(int num1, BigInt num2)
+        {
+            return new BigInt(num1.ToString()) > num2;
+        }
+        public static bool operator <(int num1, BigInt num2)
+        {
+            return new BigInt(num1.ToString()) < num2;
+        }
+        public static bool operator >(BigInt num1, int num2)
+        {
+            return num1 > new BigInt(num2.ToString());
+        }
+
+        public static bool operator <(BigInt num1, int num2)
+        {
+            return num1 < new BigInt(num2.ToString());
         }
         public static BigInt operator +(int num1, BigInt num2)
         {
-            return new BigInt(num1.ToString()) + num2;
+            return num1 + num2;
         }
 
         public static BigInt operator +(BigInt num2, int num1)
@@ -417,6 +440,73 @@ namespace Lib
         {
             return num1 - ((num1 / num2) * num2);
         }
+        public static BigInt operator %(int num1, BigInt num2)
+        {
+            return num1 - ((num1 / num2) * num2);
+        }
+        public static BigInt operator %(BigInt num1, int num2)
+        {
+            return num1 - ((num1 / num2) * num2);
+        }
+        public static BigInt operator /(int num1, BigInt num2)
+        {
+            return num1 / num2;
+        }
+        public static BigInt operator /(BigInt num1, int num2)
+        {
+            return num1 / new BigInt(num2.ToString());
+        }
+        public static BigInt operator *(int num1, BigInt num2)
+        {
+            return num1 * num2;
+        }
+        public static BigInt operator *(BigInt num1, int num2)
+        {
+            return num1 * new BigInt(num2.ToString());
+        }
+        public static BigInt ModPow(BigInt a, BigInt d, BigInt n)
+        {
+            return (a ^ d) % n;
+        }
+        public static BigInt ModPow(BigInt a, int d, BigInt n)
+        {
+            return (a ^ d) % n;
+        }
+        public static BigInt GreatestCommonDivisor(BigInt a, BigInt b)
+        {
+            if (a == 0)
+            {
+                return b;
+            }
+            else
+            {
+                while (b != 0)
+                {
+                    if (a > b)
+                        a -= b;
+                    else
+                        b -= a;
+                }
 
+                return a;
+            }
+        }
+        public byte[] ToByteArray()
+        {
+            return this.digits.SelectMany(BitConverter.GetBytes).ToArray();
+        }
+
+        public static bool TryParse(string text, out BigInt bigInteger)
+        {
+            bigInteger = new(text);
+            if (text != null)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 }
