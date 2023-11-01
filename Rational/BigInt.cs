@@ -278,6 +278,15 @@ namespace Lib
             BigInt res = num1;
             BigInt dwa = new BigInt("2");
 
+            if (num1.isNegative && (s % dwa != 0))
+            {
+                num1.isNegative = false;
+                BigInt result = num1 ^ s;
+                result.isNegative = true;
+                return result;
+            }
+            num1.isNegative = false;
+
 
             for (BigInt k = new("1"); k < s / dwa; k++)
             {
@@ -493,26 +502,6 @@ namespace Lib
             return num2 + new BigInt(num1.ToString());
         }
         /// <summary>
-        /// эта работа для Владика
-        /// </summary>
-        /// <param name="num"></param>
-        /// <param name="pow"></param>
-        /// <returns></returns>
-        public static BigInt operator ^(BigInt num,int pow)
-        {
-            /*GLEBI
-            if (num.isNegative && (pow%2 != 0))
-            {
-                num.isNegative = false; 
-                BigInt result = num ^ pow; 
-                result.isNegative = true; 
-                return result;
-            }
-            num.isNegative = false;
-            */
-            return num;
-        }
-        /// <summary>
         /// 
         /// </summary>
         /// <param name="num1"></param>
@@ -520,7 +509,10 @@ namespace Lib
         /// <returns></returns>
         public static BigInt operator %(BigInt num1,BigInt num2)
         {
-            return num1 - ((num1 / num2) * num2);
+            BigInt res = num1 - ((num1 / num2) * num2);
+            while (res.digits[^1] == 0 && res.digits.Count > 1)
+                res.digits.RemoveAt(res.digits.Count - 1);
+            return res;
         }
 
     }
