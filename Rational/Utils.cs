@@ -125,5 +125,124 @@ namespace Lib
             BigInteger num1 = BigInteger.Parse(n1);
             return BigInteger.Pow(num1, int.Parse(n2)).ToString();
         }
+
+        public static BigInt? AdditionNegative(BigInt num1, BigInt num2)
+        {
+            if (num1.IsNegative && num2.IsNegative)
+            {
+                num1.IsNegative = false;
+                num2.IsNegative = false;
+                BigInt result = num1 + num2;
+                result.IsNegative = true;
+                return result;
+            }
+            if (num1.IsNegative && !num2.IsNegative)
+            {
+                num1.IsNegative = false;
+                num2.IsNegative = false;
+                BigInt result = num2 - num1;
+                return result;
+            }
+            if (!num1.IsNegative && num2.IsNegative)
+            {
+                num2.IsNegative = false;
+                BigInt result = num1 - num2;
+                return result;
+            }
+            return null;
+        }
+
+        public static BigInt? SubstractionNegative(BigInt num1, BigInt num2)
+        {
+            if (num1.IsNegative && num2.IsNegative)
+            {
+                num1.IsNegative = false;
+                num2.IsNegative = false;
+                if (num2 > num1)
+                {
+                    BigInt result = num2 - num1;
+                    return result;
+                }
+                else
+                {
+                    BigInt result = num1 - num2;
+                    result.IsNegative = true;
+                    return result;
+                }
+            }
+            if (!num1.IsNegative && !num2.IsNegative && (num2 > num1))
+            {
+                BigInt result = num2 - num1;
+                result.IsNegative = true;
+                return result;
+            }
+            if (num1.IsNegative && !num2.IsNegative)
+            {
+                num1.IsNegative = false;
+                BigInt result = num1 + num2;
+                result.IsNegative = true;
+                return result;
+            }
+            if (!num1.IsNegative && num2.IsNegative)
+            {
+                num2.IsNegative = false;
+                BigInt result = num1 + num2;
+                return result;
+            }
+            return null;
+        }
+
+        public static BigInt? MultiplyNegative(ref BigInt num1, ref BigInt num2)
+        {
+            if (!(num1.IsNegative == num2.IsNegative))
+            {
+                num1.IsNegative = false;
+                num2.IsNegative = false;
+                BigInt result = num1 * num2;
+                result.IsNegative = true;
+                return result;
+            }
+            num1.IsNegative = false;
+            num2.IsNegative = false;
+            return null;
+        }
+
+        public static BigInt? PowNegative(ref BigInt num1, ref BigInt s)
+        {
+            BigInt two = new BigInt("2");
+            if (num1.IsNegative && (s % two != 0))
+            {
+                num1.IsNegative = false;
+                BigInt result = num1 ^ s;
+                result.IsNegative = true;
+                return result;
+            }
+            else
+            {
+                num1.IsNegative = false;
+            }
+            return null;
+        }
+
+        public static BigInt? DivisionNegative(ref BigInt dividend, ref BigInt divisor)
+        {
+            if (!(dividend.IsNegative == divisor.IsNegative))
+            {
+                dividend.IsNegative = false;
+                divisor.IsNegative = false;
+                BigInt result = dividend / divisor;
+                result.IsNegative = true;
+                return result;
+            }
+            dividend.IsNegative = false;
+            divisor.IsNegative = false;
+            return null;
+        }
+
+        public static void DeleteZeros(ref List<int> list)
+        {
+            while (list[^1] == 0 && list.Count > 1)
+                list.RemoveAt(list.Count - 1);
+        }
     }
 }

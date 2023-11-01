@@ -12,9 +12,9 @@ namespace Lib
         private bool isNegative = false;
 
         /// <summary>
-        /// преобразование числа в формате string в BigInt
+        /// Конструктор, принимающий string, определяет отрицательность числа и добавляет цифры в digits
         /// </summary>
-        /// <param name="number">число в формате string</param>
+        /// <param name="number">число с типом string</param>
         public BigInt(string number)
         {
             isNegative = number[0] == '-';
@@ -26,52 +26,47 @@ namespace Lib
                 digits.Add(digit);
             }
         }
-        
-        public bool IsNegative => isNegative;
 
         /// <summary>
-        /// конструктор
+        /// Конструктор, принимающий list целых чисех
         /// </summary>
-        /// <param name="digits">список цифр</param>
+        /// <param name="digits">список целых цифр</param>
         public BigInt(List<int> digits)
         {
             this.digits = digits;
         }
 
         /// <summary>
-        /// переопределение оператора сложения для того чтобы складывать BigInt числа 
+        /// Свойство отрицательности числа (bool)
+        /// </summary>
+        public bool IsNegative 
+        {
+            get 
+            {
+                return isNegative;
+            }
+            set
+            {
+                isNegative = value;
+            }
+        }
+
+        /// <summary>
+        /// Определение оператора сложения BigInt чисел
         /// </summary>
         /// <param name="num1">число 1</param>
         /// <param name="num2">число 2</param>
-        /// <returns></returns>
+        /// <returns>Результат сложения</returns>
         public static BigInt operator +(BigInt num1, BigInt num2)
         {
             List<int> resultDigits = new();
             int carry = 0;
 
-            //GLEBI
-            if (num1.isNegative && num2.isNegative)
+            BigInt? negativeCheck = Utils.AdditionNegative(num1, num2);
+            if (negativeCheck != null)
             {
-                num1.isNegative = false;
-                num2.isNegative = false;
-                BigInt result = num1 + num2;
-                result.isNegative = true;
-                return result;
+                return negativeCheck;
             }
-            if (num1.isNegative && !num2.isNegative)
-            {
-                num1.isNegative = false;
-                num2.isNegative = false;
-                BigInt result = num2 - num1;
-                return result;
-            }
-            if (!num1.isNegative && num2.isNegative)
-            {
-                num2.isNegative = false;
-                BigInt result = num1 - num2;
-                return result;
-            }
-            //GLEBI
 
             for (int i = 0; i < Math.Max(num1.digits.Count, num2.digits.Count); i++)
             {
@@ -89,60 +84,27 @@ namespace Lib
             {
                 resultDigits.Add(carry);
             }
-            while (resultDigits[^1] == 0 && resultDigits.Count > 1)
-                resultDigits.RemoveAt(resultDigits.Count - 1);
+            Utils.DeleteZeros(ref resultDigits);
 
             return new BigInt(resultDigits);
         }
 
         /// <summary>
-        /// переопределение оператора вычитания для того чтобы вычитать BigInt числа 
+        /// Определение оператора вычитания BigInt чисел
         /// </summary>
         /// <param name="num1">число 1</param>
         /// <param name="num2">число 2</param>
-        /// <returns></returns>
+        /// <returns>Вычитание чисел</returns>
         public static BigInt operator -(BigInt num1, BigInt num2)
         {
             List<int> resultDigits = new();
             int borrow = 0;
 
-            //GLEBI
-            if (num1.isNegative && num2.isNegative)
+            BigInt? negativeCheck = Utils.SubstractionNegative(num1, num2);
+            if (negativeCheck != null)
             {
-                num1.isNegative = false;
-                num2.isNegative = false;
-                if (num2 > num1)
-                {
-                    BigInt result = num2 - num1;
-                    return result;
-                }
-                else
-                {
-                    BigInt result = num1 - num2;
-                    result.isNegative = true;
-                    return result;
-                }
+                return negativeCheck;
             }
-            if (!num1.isNegative && !num2.isNegative && (num2 > num1))
-            {
-                BigInt result = num2 - num1;
-                result.isNegative = true;
-                return result;
-            }
-            if (num1.isNegative && !num2.isNegative)
-            {
-                num1.isNegative = false;
-                BigInt result = num1 + num2;
-                result.isNegative = true;
-                return result;
-            }
-            if (!num1.isNegative && num2.isNegative)
-            {
-                num2.isNegative = false;
-                BigInt result = num1 + num2;
-                return result;
-            }
-            //GLEBI
 
             for (int i = 0; i < Math.Max(num1.digits.Count, num2.digits.Count); i++)
             {
@@ -162,14 +124,170 @@ namespace Lib
                 }
                 resultDigits.Add(difference);
             }
-            while (resultDigits[^1] == 0 && resultDigits.Count > 1)
-                resultDigits.RemoveAt(resultDigits.Count - 1);
+            Utils.DeleteZeros(ref resultDigits);
 
             return new BigInt(resultDigits);
         }
 
         /// <summary>
-        /// операнд сравнения "больше"
+        /// Определение оператора умножения BigInt чисел
+        /// </summary>
+        /// <param name="num1">Первое число</param>
+        /// <param name="num2">второе число</param>
+        /// <returns>Результат умножения num1 на num2</returns>
+        public static BigInt operator *(BigInt num1, BigInt num2)
+        {
+            List<int> resultDigits = new List<int>(new int[num1.digits.Count + num2.digits.Count]);
+
+            BigInt? negativeCheck = Utils.MultiplyNegative(ref num1, ref num2);
+            if (negativeCheck != null)
+            {
+                return negativeCheck;
+            }
+
+            for (int i = 0; i < num1.digits.Count; i++)
+            {
+                int carry = 0;
+
+                for (int j = 0; j < num2.digits.Count || carry > 0; j++)
+                {
+                    int product = resultDigits[i + j] + num1.digits[i] * (j < num2.digits.Count ? num2.digits[j] : 0) + carry;
+                    resultDigits[i + j] = product % 10;
+                    carry = product / 10;
+                }
+            }
+
+            // Удаляем ведущие нули из результата
+            while (resultDigits.Count > 1 && resultDigits[resultDigits.Count - 1] == 0)
+            {
+                resultDigits.RemoveAt(resultDigits.Count - 1);
+            }
+
+            return new BigInt(resultDigits);
+        }
+
+        /// <summary>
+        /// Определение оператора возведения в степень BigInt числа 
+        /// </summary>
+        /// <param name="num1">Возводимое число</param>
+        /// <param name="s">Степень</param>
+        /// <returns>Возведенное число num1 в степень s</returns>
+        public static BigInt operator ^(BigInt num1, BigInt s)
+        {
+            BigInt res = num1;
+            BigInt zero = new("0");
+            BigInt two = new("2");
+            BigInt one = new("1");
+
+            if (s == zero) return one;
+            if (s == one) return num1;
+            if (s.isNegative) return zero; // потому что (1/num1)^s = 0, т.к. BigInt - целочисленный класс
+
+            BigInt? negativeCheck = Utils.PowNegative(ref num1, ref s);
+            if (negativeCheck != null)
+            {
+                return negativeCheck;
+            }
+
+            for (BigInt k = one; k < s / two; k++)
+            {
+                res *= num1;
+            }
+            
+
+            if (s % two != new BigInt("0"))
+                return res * res * num1;
+            else
+                return res * res;
+        }
+
+        /// <summary>
+        /// Переопределение метода ToString() для вывода числа в формате string
+        /// </summary>
+        /// <returns>число в формате string</returns>
+        public override string ToString()
+        {
+            string number = "";
+
+            for (int i = digits.Count - 1; i >= 0; i--)
+            {
+                number += digits[i];
+            }
+
+            return isNegative ? $"-{number}" : number;
+        }
+
+        /// <summary>
+        /// Определение оператора инкремента для увеличения значения BigInt на 1.
+        /// </summary>
+        /// <param name="num">Исходное BigInt число.</param>
+        /// <returns>Увеличенное на 1 BigInt число.</returns>
+        public static BigInt operator ++(BigInt num) => num + new BigInt("1");
+
+        /// <summary>
+        /// Оператор деления BigInt числа на другое BigInt число. Алгоритм - деление в столбик,
+        /// поочередно проходящее по каждой цифре. Сложность примерно O(n * log(n))
+        /// </summary>
+        /// <param name="num1">Делимое BigInt число.</param>
+        /// <param name="num2">Делитель BigInt число.</param>
+        /// <returns>Частное от деления двух BigInt чисел.</returns>
+        public static BigInt operator /(BigInt dividend, BigInt divisor)
+        {
+            List<int> dividendDigits = new();
+            dividendDigits.AddRange(dividend.digits);
+
+            List<int> answer = new();
+
+            BigInt tempDividend = new("0");
+            int currentIndex = dividendDigits.Count - 1;
+            BigInt IO = new("10");
+
+            BigInt? negativeCheck = Utils.DivisionNegative(ref dividend, ref divisor);
+            if (negativeCheck != null)
+            {
+                return negativeCheck;
+            }
+
+            // Пока не пройдем по всем цифрам в делимом числе
+            while (currentIndex >= 0)
+            {
+                tempDividend = tempDividend*IO+dividendDigits[currentIndex];
+                currentIndex--;
+
+                int quotient = 0;
+                
+                // Выполняем деление, пока tempDividend не станет меньше divisor
+                while (tempDividend >= divisor)
+                {
+                    tempDividend -= divisor;
+                    quotient++;
+                }
+
+                answer.Add(quotient);
+            }
+            BigInt res = new(answer);
+            res.digits.Reverse();
+
+            Utils.DeleteZeros(ref res.digits);
+
+            return res;
+        }
+
+        /// <summary>
+        /// Определение оператора остатка, вычисляющий остаток от деления BigInt чисел
+        /// </summary>
+        /// <param name="num1">1 число</param>
+        /// <param name="num2">2 число</param>
+        /// <returns>Остаток от деления num1 на num2</returns>
+        public static BigInt operator %(BigInt num1, BigInt num2)
+        {
+            BigInt res = num1 - ((num1 / num2) * num2);
+            Utils.DeleteZeros(ref res.digits);
+            return res;
+        }
+
+        /// <summary>
+        /// Определение оператора сравнения "больше"
         /// </summary>
         /// <param name="num1">число 1</param>
         /// <param name="num2">число 2</param>
@@ -180,7 +298,7 @@ namespace Lib
         }
 
         /// <summary>
-        /// Переопределение оператора "больше или равно" для сравнения двух BigInt чисел.
+        /// Определение оператора "больше или равно" для сравнения двух BigInt чисел.
         /// </summary>
         /// <param name="num1">Первое BigInt число.</param>
         /// <param name="num2">Второе BigInt число.</param>
@@ -202,7 +320,7 @@ namespace Lib
         }
 
         /// <summary>
-        /// Переопределение оператора "меньше или равно" для сравнения двух BigInt чисел.
+        /// Определение оператора "меньше или равно" для сравнения двух BigInt чисел.
         /// </summary>
         /// <param name="num1">Первое BigInt число.</param>
         /// <param name="num2">Второе BigInt число.</param>
@@ -235,167 +353,7 @@ namespace Lib
         }
 
         /// <summary>
-        /// переопределения операнда умножения для того чтобы умножать числа в формате BigInt
-        /// </summary>
-        /// <param name="num1">Первое число</param>
-        /// <param name="num2">второе число</param>
-        /// <returns>Результат умножения n1*n2</returns>
-        public static BigInt operator *(BigInt num1, BigInt num2)
-        {
-            List<int> resultDigits = new List<int>(new int[num1.digits.Count + num2.digits.Count]);
-            
-            //GLEBI
-            if (!(num1.isNegative == num2.isNegative))
-            {
-                num1.isNegative = false;
-                num2.isNegative = false;
-                BigInt result = num1 * num2;
-                result.isNegative = true;
-                return result;
-            }
-            num1.isNegative = false;
-            num2.isNegative = false;
-            //GLEBI
-
-            for (int i = 0; i < num1.digits.Count; i++)
-            {
-                int carry = 0;
-
-                for (int j = 0; j < num2.digits.Count || carry > 0; j++)
-                {
-                    int product = resultDigits[i + j] + num1.digits[i] * (j < num2.digits.Count ? num2.digits[j] : 0) + carry;
-                    resultDigits[i + j] = product % 10;
-                    carry = product / 10;
-                }
-            }
-
-            // Удаляем ведущие нули из результата
-            while (resultDigits.Count > 1 && resultDigits[resultDigits.Count - 1] == 0)
-            {
-                resultDigits.RemoveAt(resultDigits.Count - 1);
-            }
-
-            return new BigInt(resultDigits);
-        }
-
-        public static BigInt operator ^(BigInt num1, BigInt s)
-        {
-            BigInt res = num1;
-            BigInt zero = new("0");
-            BigInt two = new("2");
-            BigInt one = new("1");
-
-            if (s == zero) return one;
-            if (s == one) return num1;
-            if (s.isNegative) return zero; // потому что (1/num1)^s = 0, т.к. BigInt - целочисленный класс
-
-            if (num1.isNegative && (s % two != 0))
-            {
-                num1.isNegative = false;
-                BigInt result = num1 ^ s;
-                result.isNegative = true;
-                return result;
-            } 
-            else
-            {
-                num1.isNegative = false;
-            }
-
-            for (BigInt k = one; k < s / two; k++)
-            {
-                res *= num1;
-            }
-            
-
-            if (s % two != new BigInt("0"))
-                return res * res * num1;
-            else
-                return res * res;
-        }
-
-        /// <summary>
-        /// переопределение метода ToString() для вывода числа в формате string
-        /// </summary>
-        /// <returns>число в формате string</returns>
-        public override string ToString()
-        {
-            string number = "";
-
-            for (int i = digits.Count - 1; i >= 0; i--)
-            {
-                number += digits[i];
-            }
-
-            return isNegative ? $"-{number}" : number;
-        }
-
-        /// <summary>
-        /// Переопределение оператора инкремента для увеличения значения BigInt на 1.
-        /// </summary>
-        /// <param name="num">Исходное BigInt число.</param>
-        /// <returns>Увеличенное на 1 BigInt число.</returns>
-        public static BigInt operator ++(BigInt num) => num + new BigInt("1");
-
-        /// <summary>
-        /// Оператор деления BigInt числа на другое BigInt число.
-        /// </summary>
-        /// <param name="num1">Делимое BigInt число.</param>
-        /// <param name="num2">Делитель BigInt число.</param>
-        /// <returns>Частное от деления двух BigInt чисел.</returns>
-        public static BigInt operator /(BigInt dividend, BigInt divisor)
-        {
-            List<int> dividendDigits = new();
-            dividendDigits.AddRange(dividend.digits);
-
-            List<int> answer = new();
-
-            BigInt tempDividend = new("0");
-            int currentIndex = dividendDigits.Count - 1;
-            BigInt IO = new("10");
-
-            //GLEBI
-            if (!(dividend.isNegative == divisor.isNegative))
-            {
-                dividend.isNegative = false;
-                divisor.isNegative = false;
-                BigInt result = dividend / divisor;
-                result.isNegative = true;
-                return result;
-            }
-            dividend.isNegative = false;
-            divisor.isNegative = false;
-            //GLEBI
-
-            // Пока не пройдем по всем цифрам в делимом числе
-            while (currentIndex >= 0)
-            {
-                tempDividend = tempDividend*IO+dividendDigits[currentIndex];
-                currentIndex--;
-
-                int quotient = 0;
-                
-                // Выполняем деление, пока tempDividend не станет меньше divisor
-                while (tempDividend >= divisor)
-                {
-                    tempDividend -= divisor;
-                    while (tempDividend.digits[^1] == 0 && tempDividend.digits.Count > 1)
-                        tempDividend.digits.RemoveAt(tempDividend.digits.Count-1);
-                    quotient++;
-                }
-
-                answer.Add(quotient);
-            }
-            BigInt res = new(answer);
-            res.digits.Reverse();
-
-            while (res.digits[^1] == 0 && res.digits.Count > 1)
-                res.digits.RemoveAt(res.digits.Count - 1);
-
-            return res;
-        }
-
-        /// <summary>
-        /// Переопределение оператора равенства для сравнения двух BigInt чисел.
+        /// Определение оператора равенства для сравнения двух BigInt чисел. 
         /// </summary>
         /// <param name="num1">Первое BigInt число.</param>
         /// <param name="num2">Второе BigInt число.</param>
@@ -424,7 +382,7 @@ namespace Lib
         }
 
         /// <summary>
-        /// Переопределение оператора неравенства для сравнения двух BigInt чисел.
+        /// Определение оператора неравенства для сравнения двух BigInt чисел.
         /// </summary>
         /// <param name="num1">Первое BigInt число.</param>
         /// <param name="num2">Второе BigInt число.</param>
@@ -515,19 +473,5 @@ namespace Lib
         {
             return num2 + new BigInt(num1.ToString());
         }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="num1"></param>
-        /// <param name="num2"></param>
-        /// <returns></returns>
-        public static BigInt operator %(BigInt num1,BigInt num2)
-        {
-            BigInt res = num1 - ((num1 / num2) * num2);
-            while (res.digits[^1] == 0 && res.digits.Count > 1)
-                res.digits.RemoveAt(res.digits.Count - 1);
-            return res;
-        }
-
     }
 }
