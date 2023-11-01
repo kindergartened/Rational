@@ -42,6 +42,7 @@
             labelNum2 = new Label();
             labelResult = new Label();
             button5 = new Button();
+            button1 = new Button();
             SuspendLayout();
             // 
             // richTextBox1
@@ -81,7 +82,7 @@
             // 
             additionBtn.FlatStyle = FlatStyle.Popup;
             additionBtn.Font = new Font("Segoe UI", 36F, FontStyle.Regular, GraphicsUnit.Point);
-            additionBtn.Location = new Point(102, 488);
+            additionBtn.Location = new Point(26, 487);
             additionBtn.Margin = new Padding(3, 2, 3, 2);
             additionBtn.Name = "additionBtn";
             additionBtn.Size = new Size(99, 91);
@@ -94,7 +95,7 @@
             // 
             substractBtn.FlatStyle = FlatStyle.Popup;
             substractBtn.Font = new Font("Segoe UI", 48F, FontStyle.Regular, GraphicsUnit.Point);
-            substractBtn.Location = new Point(725, 488);
+            substractBtn.Location = new Point(649, 487);
             substractBtn.Margin = new Padding(3, 2, 3, 2);
             substractBtn.Name = "substractBtn";
             substractBtn.Size = new Size(102, 91);
@@ -107,7 +108,7 @@
             // 
             multiplyBtn.FlatStyle = FlatStyle.Popup;
             multiplyBtn.Font = new Font("Segoe UI", 36F, FontStyle.Regular, GraphicsUnit.Point);
-            multiplyBtn.Location = new Point(259, 488);
+            multiplyBtn.Location = new Point(183, 487);
             multiplyBtn.Margin = new Padding(3, 2, 3, 2);
             multiplyBtn.Name = "multiplyBtn";
             multiplyBtn.Size = new Size(102, 91);
@@ -120,7 +121,7 @@
             // 
             divideBtn.FlatStyle = FlatStyle.Popup;
             divideBtn.Font = new Font("Segoe UI", 28F, FontStyle.Regular, GraphicsUnit.Point);
-            divideBtn.Location = new Point(568, 488);
+            divideBtn.Location = new Point(492, 487);
             divideBtn.Margin = new Padding(3, 2, 3, 2);
             divideBtn.Name = "divideBtn";
             divideBtn.Size = new Size(99, 91);
@@ -196,7 +197,7 @@
             // 
             button5.FlatStyle = FlatStyle.Popup;
             button5.Font = new Font("Segoe UI", 22F, FontStyle.Regular, GraphicsUnit.Point);
-            button5.Location = new Point(410, 488);
+            button5.Location = new Point(334, 487);
             button5.Margin = new Padding(3, 2, 3, 2);
             button5.Name = "button5";
             button5.Size = new Size(102, 91);
@@ -205,11 +206,24 @@
             button5.UseVisualStyleBackColor = true;
             button5.Click += button5_Click;
             // 
+            // button1
+            // 
+            button1.BackColor = SystemColors.ButtonFace;
+            button1.Font = new Font("Segoe UI Black", 15.75F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point);
+            button1.Location = new Point(799, 487);
+            button1.Name = "button1";
+            button1.Size = new Size(102, 91);
+            button1.TabIndex = 14;
+            button1.Text = "^";
+            button1.UseVisualStyleBackColor = false;
+            button1.Click += button1_Click;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(938, 600);
+            Controls.Add(button1);
             Controls.Add(button5);
             Controls.Add(labelResult);
             Controls.Add(labelNum2);
@@ -247,5 +261,6 @@
         private Label labelNum2;
         private Label labelResult;
         private Button button5;
+        private Button button1;
     }
 }
