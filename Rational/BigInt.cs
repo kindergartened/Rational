@@ -102,6 +102,9 @@ namespace Lib
                 }
                 resultDigits.Add(difference);
             }
+            while (resultDigits[^1] == 0 && resultDigits.Count > 1)
+                resultDigits.RemoveAt(resultDigits.Count - 1);
+
             return new BigInt(resultDigits);
         }
 
@@ -216,6 +219,8 @@ namespace Lib
             {
                 res *= num1;
             }
+            while (res.digits[^1] == 0 && res.digits.Count > 1)
+                res.digits.RemoveAt(res.digits.Count - 1);
 
             if (s % dwa != new BigInt("0"))
                 return res * res * num1;
@@ -426,16 +431,6 @@ namespace Lib
             return num2 + new BigInt(num1.ToString());
         }
         /// <summary>
-        /// эта работа для Владика
-        /// </summary>
-        /// <param name="num"></param>
-        /// <param name="pow"></param>
-        /// <returns></returns>
-        public static BigInt operator ^(BigInt num,int pow)
-        {
-            return num;
-        }
-        /// <summary>
         /// 
         /// </summary>
         /// <param name="num1"></param>
@@ -443,7 +438,10 @@ namespace Lib
         /// <returns></returns>
         public static BigInt operator %(BigInt num1,BigInt num2)
         {
-            return num1 - ((num1 / num2) * num2);
+            BigInt res = num1 - ((num1 / num2) * num2);
+            while (res.digits[^1] == 0 && res.digits.Count > 1)
+                res.digits.RemoveAt(res.digits.Count - 1);
+            return res;
         }
         public static BigInt operator %(int num1, BigInt num2)
         {
@@ -475,7 +473,7 @@ namespace Lib
         }
         public static BigInt ModPow(BigInt a, int d, BigInt n)
         {
-            return (a ^ d) % n;
+            return (a ^ new BigInt(d.ToString())) % n;
         }
         public static BigInt GreatestCommonDivisor(BigInt a, BigInt b)
         {
