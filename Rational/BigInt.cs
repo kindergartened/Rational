@@ -17,6 +17,8 @@ namespace Lib
         /// <param name="number">число в формате string</param>
         public BigInt(string number)
         {
+            isNegative = number[0] == '-';
+            if (isNegative) number = number.Substring(1);
             digits = new List<int>();
             for (int i = number.Length - 1; i >= 0; i--)
             {
@@ -46,6 +48,30 @@ namespace Lib
         {
             List<int> resultDigits = new();
             int carry = 0;
+
+            //GLEBI
+            if (num1.isNegative && num2.isNegative)
+            {
+                num1.isNegative = false;
+                num2.isNegative = false;
+                BigInt result = num1 + num2;
+                result.isNegative = true;
+                return result;
+            }
+            if (num1.isNegative && !num2.isNegative)
+            {
+                num1.isNegative = false;
+                num2.isNegative = false;
+                BigInt result = num2 - num1;
+                return result;
+            }
+            if (!num1.isNegative && num2.isNegative)
+            {
+                num2.isNegative = false;
+                BigInt result = num1 - num2;
+                return result;
+            }
+            //GLEBI
 
             for (int i = 0; i < Math.Max(num1.digits.Count, num2.digits.Count); i++)
             {
@@ -78,12 +104,50 @@ namespace Lib
             List<int> resultDigits = new();
             int borrow = 0;
 
+            //GLEBI
+            if (num1.isNegative && num2.isNegative)
+            {
+                num1.isNegative = false;
+                num2.isNegative = false;
+                if (num2 > num1)
+                {
+                    BigInt result = num2 - num1;
+                    return result;
+                }
+                else
+                {
+                    BigInt result = num1 - num2;
+                    result.isNegative = true;
+                    return result;
+                }
+            }
+            if (!num1.isNegative && !num2.isNegative && (num2 > num1))
+            {
+                BigInt result = num2 - num1;
+                result.isNegative = true;
+                return result;
+            }
+            if (num1.isNegative && !num2.isNegative)
+            {
+                num1.isNegative = false;
+                BigInt result = num1 + num2;
+                result.isNegative = true;
+                return result;
+            }
+            if (!num1.isNegative && num2.isNegative)
+            {
+                num2.isNegative = false;
+                BigInt result = num1 + num2;
+                return result;
+            }
+            //GLEBI
+
             for (int i = 0; i < Math.Max(num1.digits.Count, num2.digits.Count); i++)
             {
                 int digit1 = i < num1.digits.Count ? num1.digits[i] : 0;
                 int digit2 = i < num2.digits.Count ? num2.digits[i] : 0;
 
-                int difference = digit1 - digit2 - borrow;
+                int difference = (digit1) - (digit2) - borrow;
 
                 if (difference < 0)
                 {
@@ -174,6 +238,19 @@ namespace Lib
         public static BigInt operator *(BigInt num1, BigInt num2)
         {
             List<int> resultDigits = new List<int>(new int[num1.digits.Count + num2.digits.Count]);
+            
+            //GLEBI
+            if (!(num1.isNegative == num2.isNegative))
+            {
+                num1.isNegative = false;
+                num2.isNegative = false;
+                BigInt result = num1 * num2;
+                result.isNegative = true;
+                return result;
+            }
+            num1.isNegative = false;
+            num2.isNegative = false;
+            //GLEBI
 
             for (int i = 0; i < num1.digits.Count; i++)
             {
@@ -221,7 +298,7 @@ namespace Lib
                 number += digits[i];
             }
 
-            return number;
+            return isNegative ? $"-{number}" : number;
         }
 
         /// <summary>
@@ -247,6 +324,19 @@ namespace Lib
             BigInt tempDividend = new("0");
             int currentIndex = dividendDigits.Count - 1;
             BigInt IO = new("10");
+
+            //GLEBI
+            if (!(dividend.isNegative == divisor.isNegative))
+            {
+                dividend.isNegative = false;
+                divisor.isNegative = false;
+                BigInt result = dividend / divisor;
+                result.isNegative = true;
+                return result;
+            }
+            dividend.isNegative = false;
+            divisor.isNegative = false;
+            //GLEBI
 
             // Пока не пройдем по всем цифрам в делимом числе
             while (currentIndex >= 0)
@@ -405,6 +495,16 @@ namespace Lib
         /// <returns></returns>
         public static BigInt operator ^(BigInt num,int pow)
         {
+            /*GLEBI
+            if (num.isNegative && (pow%2 != 0))
+            {
+                num.isNegative = false; 
+                BigInt result = num ^ pow; 
+                result.isNegative = true; 
+                return result;
+            }
+            num.isNegative = false;
+            */
             return num;
         }
         /// <summary>
