@@ -129,5 +129,26 @@ namespace Interface
                 MessageBox.Show("Ошибка");
             }
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if (richTextBox1.Text == "" || richTextBox2.Text == "")
+            {
+                MessageBox.Show("Пустое поле");
+                return;
+            }
+            try
+            {
+                string n1 = richTextBox1.Text;
+                string n2 = richTextBox2.Text;
+                BigInt num1 = new(n1);
+                BigInt num2 = new(n2);
+                richTextBox3.Text = (num1 ^ num2).ToString();
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Ошибка");
+            }
+        }
     }
 }

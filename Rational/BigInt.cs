@@ -283,8 +283,9 @@ namespace Lib
             {
                 res *= num1;
             }
+            
 
-            if (s % dwa != new BigInt("0"))
+            if (s % new BigInt("2") != new BigInt("0"))
                 return res * res * num1;
             else
                 return res * res;
