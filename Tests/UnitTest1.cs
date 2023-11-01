@@ -39,12 +39,32 @@ namespace Tests
         [TestMethod]
         public void DivBig()
         {
-            string n2 = "111111111111111111111111145454567";
-            string n1 = "885495849589458945849584958489588";
+            string n1 = "111111111111111111111111145454567";
+            string n2 = "885495849589458945849584958489588";
             BigInt num1 = new BigInt(n1);
             BigInt num2 = new BigInt(n2);
             BigInt result = num1 / num2;
             Assert.AreEqual(TestDivideBig(n1, n2), result.ToString());
+        }
+        [TestMethod]
+        public void OstBig()
+        {
+            string n1 = "111111111111111111111111145454567";
+            string n2 = "885495849589458945849584958489588";
+            BigInt num1 = new BigInt(n1);
+            BigInt num2 = new BigInt(n2);
+            BigInt result = num1 % num2;
+            Assert.AreEqual(TestOstBig(n1, n2), result.ToString());
+        }
+        [TestMethod]
+        public void PowBig()
+        {
+            string n1 = "12";
+            string n2 = "8";
+            BigInt num1 = new BigInt(n1);
+            BigInt num2 = new BigInt(n2);
+            BigInt result = num1 ^ num2;
+            Assert.AreEqual(TestPowBig(n1, n2), result.ToString());
         }
     }
 }
