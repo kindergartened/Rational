@@ -79,7 +79,7 @@ namespace Lib
             return (num1 + num2).ToString();
         }
         /// <summary>
-        /// метод,необходимый для выполнение операции вычитания двух БОЛЬШИХ ЧИСЕЛ 
+        /// метод,необходимый для выполнения операции вычитания двух БОЛЬШИХ ЧИСЕЛ 
         /// </summary>
         /// <param name="n1">BigInteger в формате string</param>
         /// <param name="n2">BigInteger в формате string</param>
@@ -91,7 +91,7 @@ namespace Lib
             return (num1 - num2).ToString();
         }
         /// <summary>
-        /// метод,необходимый для выполнение операции деления двух БОЛЬШИХ ЧИСЕЛ (ПОМЕНЯТЬ)
+        /// метод,необходимый для выполнения операции деления двух БОЛЬШИХ ЧИСЕЛ
         /// </summary>
         /// <param name="n1">BigInteger в формате string</param>
         /// <param name="n2">BigInteger в формате string</param>
@@ -101,6 +101,29 @@ namespace Lib
             BigInteger num1 = BigInteger.Parse(n1);
             BigInteger num2 = BigInteger.Parse(n2);
             return (num1 / num2).ToString();
+        }
+        /// <summary>
+        /// метод,необходимый для выполнения операции нахождения остатка БОЛЬШИХ ЧИСЕЛ
+        /// </summary>
+        /// <param name="n1">BigInteger в формате string</param>
+        /// <param name="n2">BigInteger в формате string</param>
+        /// <returns></returns>
+        public static string TestOstBig(string n1, string n2)
+        {
+            BigInteger num1 = BigInteger.Parse(n1);
+            BigInteger num2 = BigInteger.Parse(n2);
+            return (num1 % num2).ToString();
+        }
+        /// <summary>
+        /// метод,необходимый для выполнения операции возведения в степень БОЛЬШИХ ЧИСЕЛ
+        /// </summary>
+        /// <param name="n1">BigInteger в формате string</param>
+        /// <param name="n2">BigInteger в формате string</param>
+        /// <returns></returns>
+        public static string TestPowBig(string n1, string n2)
+        {
+            BigInteger num1 = BigInteger.Parse(n1);
+            return BigInteger.Pow(num1, int.Parse(n2)).ToString();
         }
     }
 }

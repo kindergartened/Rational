@@ -276,13 +276,18 @@ namespace Lib
         public static BigInt operator ^(BigInt num1, BigInt s)
         {
             BigInt res = num1;
-            
-            for (BigInt k = new("1"); k < s; k++)
+            BigInt dwa = new BigInt("2");
+
+
+            for (BigInt k = new("1"); k < s / dwa; k++)
             {
                 res *= num1;
             }
 
-            return res;
+            if (s % dwa != new BigInt("0"))
+                return res * res * num1;
+            else
+                return res * res;
         }
 
         /// <summary>
