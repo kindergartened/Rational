@@ -89,6 +89,8 @@ namespace Lib
             {
                 resultDigits.Add(carry);
             }
+            while (resultDigits[^1] == 0 && resultDigits.Count > 1)
+                resultDigits.RemoveAt(resultDigits.Count - 1);
 
             return new BigInt(resultDigits);
         }
@@ -160,6 +162,9 @@ namespace Lib
                 }
                 resultDigits.Add(difference);
             }
+            while (resultDigits[^1] == 0 && resultDigits.Count > 1)
+                resultDigits.RemoveAt(resultDigits.Count - 1);
+
             return new BigInt(resultDigits);
         }
 
@@ -276,25 +281,33 @@ namespace Lib
         public static BigInt operator ^(BigInt num1, BigInt s)
         {
             BigInt res = num1;
-            BigInt dwa = new BigInt("2");
+            BigInt zero = new("0");
+            BigInt two = new("2");
+            BigInt one = new("1");
 
-            if (num1.isNegative && (s % dwa != 0))
+            if (s == zero) return one;
+            if (s == one) return num1;
+            if (s.isNegative) return zero; // потому что (1/num1)^s = 0, т.к. BigInt - целочисленный класс
+
+            if (num1.isNegative && (s % two != 0))
             {
                 num1.isNegative = false;
                 BigInt result = num1 ^ s;
                 result.isNegative = true;
                 return result;
+            } 
+            else
+            {
+                num1.isNegative = false;
             }
-            num1.isNegative = false;
 
-
-            for (BigInt k = new("1"); k < s / dwa; k++)
+            for (BigInt k = one; k < s / two; k++)
             {
                 res *= num1;
             }
             
 
-            if (s % new BigInt("2") != new BigInt("0"))
+            if (s % two != new BigInt("0"))
                 return res * res * num1;
             else
                 return res * res;
